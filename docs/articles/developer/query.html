@@ -1,0 +1,242 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Viewer.Query </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Viewer.Query ">
+    <meta name="generator" content="docfx 2.40.11.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <meta property="docfx:navrel" content="../../toc">
+    <meta property="docfx:tocrel" content="../toc">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+                
+                <ul class="nav level1 navbar-nav">
+                      <li>
+                          <a href="../../articles/intro.html" title="Articles">Articles</a>
+                      </li>
+                      <li>
+                          <a href="../../api/index.html" title="API Documentation">API Documentation</a>
+                      </li>
+                </ul>    </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div>
+              <div class="sidefilter">
+                <form class="toc-filter">
+                  <span class="glyphicon glyphicon-filter filter-icon"></span>
+                  <input type="text" id="toc_filter_input" placeholder="Enter here to filter..." onkeypress="if(event.keyCode==13) {return false;}">
+                </form>
+              </div>
+              <div class="sidetoc">
+                <div class="toc" id="toc">
+                  
+                  <ul class="nav level1">
+                    <li class="">
+                      <span class="expand-stub"></span>
+                      <a href="../intro.html" title="Introduction" class="">Introduction</a>
+                        
+                        <ul class="nav level2">
+                          <li class="">
+                            <a href="../user/ui-overview.html" title="UI overview" class="">UI overview</a>
+                          </li>
+                          <li class="">
+                            <a href="../user/query.html" title="Query language" class="">Query language</a>
+                          </li>
+                        </ul>  </li>
+                    <li class="">
+                      <span class="expand-stub"></span>
+                      <a class="">Developer manual</a>
+                        
+                        <ul class="nav level2">
+                          <li class="">
+                            <a href="../developer/getting-started.html" title="Getting started" class="">Getting started</a>
+                          </li>
+                          <li class="">
+                            <a href="../developer/overview.html" title="Application structure overview" class="">Application structure overview</a>
+                          </li>
+                          <li class="">
+                            <a href="../developer/data.html" title="Viewer.Data" class="">Viewer.Data</a>
+                          </li>
+                          <li class="active">
+                            <a href="../developer/query.html" title="Viewer.Query" class="active">Viewer.Query</a>
+                          </li>
+                          <li class="">
+                            <a href="../developer/gui.html" title="Viewer" class="">Viewer</a>
+                          </li>
+                        </ul>  </li>
+                  </ul>        </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="viewerquery">Viewer.Query</h1>
+
+<h2 id="compilation">Compilation</h2>
+<p>Expressions in the <code>where</code> part and the <code>order by</code> part of the query are compiled to a C# code using <a href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/expression-trees/">Expression Trees</a>. Since we don't know the type of an attribute, many decisions have to be made at runtime. The generated code will therefore mostly just call runtime functions. Expression trees are used mainly for convenience (no need to write an interpreter).</p>
+<p>The compiled function takes an <a class="xref" href="../../api/Viewer.Data.IEntity.html">entity</a> and returns a <a class="xref" href="../../api/Viewer.Data.BaseValue.html">value</a>. If the returned value in the <code>where</code> part of a query is null (i.e., <a class="xref" href="../../api/Viewer.Data.BaseValue.html#Viewer_Data_BaseValue_IsNull">IsNull</a> is true), it is interpreted as <code>false</code> (i.e., the entity is not included in the result).</p>
+<h2 id="execution">Execution</h2>
+<p>Queries are executed lazily by calling the <a class="xref" href="../../api/Viewer.Query.IExecutableQuery.html">Execute</a> method. It returns an enumerator which loads entities. Even queries which contain <code>UNION</code>, <code>EXCEPT</code> and <code>INTERSECT</code> operators are evaluated lazily. This is possible due to the <a class="xref" href="../../api/Viewer.Query.IExecutableQuery.html">Match</a> method which can determine statically (i.e., without looking at any other entity) whether or not an entity matches given query.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Returned entities are not sorted. If we were to sort the values before returning them, we would have to first find all photos.</p>
+</div>
+<p>The <a class="xref" href="../../api/Viewer.Query.IExecutableQuery.html">Execute</a> method supports standard cancellation and progress even though it is not an async method and it executes completely synchronously.</p>
+<h2 id="optimizations">Optimizations</h2>
+<p>As discussed in the section about <a href="data.html">data representation</a>, attributes are stored in custom JPEG segments. This means that whenever we want to load attributes a photo, we just have to load first few disk blocks. Usually, the number of read blocks is fairly small. In my data, it is around 10 disk blocks although this can vary based on used camera and programs which also store custom metadata to JPEG segments. Unfortunately, when we want to read many photos, the blocks are far apart since, at best, there is the encoded image data in-between 2 attribute segments. This is especially problematic on HDDs where seek time and rotational delay are included with each random access.</p>
+<h3 id="indexing">Indexing</h3>
+<p>One of the most effective and simple optimizations the application uses is storing attributes of recently seen photos in a SQLite database. This way, the data is indexed using a B-tree structure. B-trees are especially suited for disk access as only a fraction of blocks is necessary to be loaded from the disk with each lookup operation. Also, the first few levels of the tree can be kept in main memory so that following requests can locate their data even faster.</p>
+<p>Usually, photos are stored on an HDD either localy or in a local network on a NAS server. While individual photos take up just a few tens of MBs of disk space, it is common to have collections of thousands of them. Most of the space is occupated by encoded image data. The size of attributes, and by extension the size of the index file, is orders of magnitude smaller than the size of the photo collection. This means that the index structure can be stored on a smaller and faster disk type. For example, it can be stored on a small SSD or even in main memory.</p>
+<h3 id="search-order">Search order</h3>
+<p>When we first see a directory, we don't know much about the files it contains. The program will just simply search all files in a BFS order. Performance of this approach depends on file distribution in said direcotry. If we are lucky, all files from the result set will be in the first searched folder. Unfortunately, we could also be really unlucky and all files from the result set will be in the last direcotry.</p>
+<p>So, it wouldn't be a good idea to search the same folder in a BFS order again but what should we do about it? We could remember the distribution of individual attribute names and use that. Consider this example of a possible query predicate: <code>a and not b</code>. What if we knew <code>a</code> and <code>b</code> is there is a 1000 times? Well, we don't know much about <code>a and not b</code>, since in the best case none of the files with <code>a</code> contain <code>b</code>, but in the worst case all of them do. It would be wrong to assume <code>a</code> and <code>b</code> independent without additinal information. That's why the query evaluator remembers distribution of attribute name subsets rather than individual attribute names. We can afford to do that because, in a typical situation, the number of used subsets is linear with the number of used attribute names and we don't have to wory about subsets which are not used.</p>
+<h3 id="we-know-the-distribution-what-now">We know the distribution. What now?</h3>
+<p>We have to come up with an optimal search order of directories. The query evaluator looks at the query predicate and detemrines which attribute name subsets will likely cause the predicate to evaluate to true. Note, we still don't know for sure whether the predicate evaluates to true for given subset since it could have a form: <code>a = &quot;value&quot;</code>. Finally, we can just add up the numbers since they represent sizes of disjoint sets. This will be our search priority.</p>
+<h3 id="nested-queries">Nested queries</h3>
+<p>The compiler will automatically flatten nested queries (including query views). Conditions in the <code>where</code> clause are joined using the <code>and</code> operator. Order of the outer query is used (for example: <code>select (select a order by b) order by c</code> will be ordered by <code>c</code> only).</p>
+<h3 id="set-operators">Set operators</h3>
+<p>One of the goals of the query evaluator is to deliver the first photo to the user as fast as possible. It achives this goal in many ways. For example, found photos are returnd in an arbitrary order and are sorted incrementally. Another challenge for the evaluator, in this sense, are most of the set operators (namely <code>intersect</code> and <code>except</code>). A naïve way of evaluating a query of type <code>A intersect B</code> would first evaluate <code>A</code>, then evaluate <code>B</code> and only return files which have been found by both queries. One major disadvatage is that if <code>A</code> has to search many files and most of them are not in the query result set, the user will have to wait a long time. We can make an optimization which would load files from both queries at the same time in a round-robin fashion (i.e., load the next file from <code>A</code> then load the next file from <code>B</code> and repeat). There is an even better way.</p>
+<p>Given attributes of a photo and its path, the evaluator can determine whether it belogs to the result set of some query without reading any other files. For simple queries, we can create a regular expression whose language is exactly the set of paths to folders searched by given path pattern. Query predicate can easily be evaluated on loaded attributes. To determine whether a file is in an <code>intersection</code>, we check whether it is in both subqueries. <code>union</code> can be satisfied if it is in either subquery and for <code>except</code> it has to be in the first subquery but not in the second one. In the previous section <a href="#nested-queries">Nested queries</a> we have discused how are nested queries transformed to queries without nested subqueries. Thus, by induction, we can do this with zero additional I/O for every query.</p>
+<p>Consider a query <code>A except B</code>. Let us denote <code>n</code> the number of files searched during evaluation of <code>A</code> and <code>m</code> the number of files searched during the evaluation of <code>B</code>. An interesting consequence of the algorithm described in previous paragraph is that we can evaluate the <code>A except B</code> query while only searching <code>n</code> files (instead of <code>n + m</code>).</p>
+<h2 id="grammar">Grammar</h2>
+<p>The program uses ANTLR4 to generate query parser and lexer.</p>
+<pre><code class="lang-csharp" name="Grammar">parser grammar QueryParser;
+
+options {
+  tokenVocab=QueryLexer;
+}
+
+entry: queryExpression EOF;
+
+// set operations on queries
+queryExpression: intersection (UNION_EXCEPT intersection)*;
+
+intersection: queryFactor (INTERSECT queryFactor)*;
+
+queryFactor: query | LPAREN queryExpression RPAREN;
+
+// query
+query: unorderedQuery optionalOrderBy optionalGroupBy;
+
+unorderedQuery: SELECT source optionalWhere;
+
+source: ID | COMPLEX_ID | STRING | LPAREN queryExpression RPAREN;
+
+// WHERE
+optionalWhere: WHERE predicate | ;
+
+// ORDER BY
+optionalOrderBy: ORDER BY orderByList | ;
+
+orderByList: orderByKey (PARAM_DELIMITER orderByKey)*;
+
+orderByKey: comparison DIRECTION?;
+
+// GROUP BY
+optionalGroupBy: GROUP BY predicate | ;
+
+// expressions
+predicate: conjunction (OR conjunction)*;
+
+conjunction: literal (AND literal)*; 
+
+literal: comparison | NOT comparison;
+
+comparison: expression (REL_OP expression)?;
+
+expression: multiplication (ADD_SUB multiplication)*;
+
+multiplication: factor (MULT_DIV factor)*;
+
+factor: LPAREN predicate RPAREN | INT | REAL | STRING | COMPLEX_ID  (LPAREN argumentList RPAREN)? | ID (LPAREN argumentList RPAREN)? | ADD_SUB factor;
+
+argumentList: comparison (PARAM_DELIMITER comparison)* | ;
+</code></pre></article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/trylock/viewer/blob/release_143/src/docs/articles/developer/query.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>

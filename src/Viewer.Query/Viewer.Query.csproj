@@ -1,0 +1,167 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A09EE86C-981C-4F59-9554-C89FC8064C25}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Viewer.Query</RootNamespace>
+    <AssemblyName>Viewer.Query</AssemblyName>
+    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Antlr4.Runtime.Standard, Version=4.7.1.0, Culture=neutral, PublicKeyToken=e78b2c5abd1fcb3f, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Antlr4.Runtime.Standard.4.7.1.1\lib\net35\Antlr4.Runtime.Standard.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\NLog.4.5.8\lib\net45\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.IdentityModel" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.ValueTuple">
+      <HintPath>..\..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\GlobalAssemblyInfo.cs">
+      <Link>Properties\GlobalAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="AggregateQueryErrorListener.cs" />
+    <Compile Include="ExecutionContext.cs" />
+    <Compile Include="Execution\BinaryQueryOperator.cs" />
+    <Compile Include="Execution\ExceptQuery.cs" />
+    <Compile Include="Execution\ExecutionOptions.cs" />
+    <Compile Include="Execution\IntersectQuery.cs" />
+    <Compile Include="Execution\SimpleQuery.cs" />
+    <Compile Include="Execution\UnionQuery.cs" />
+    <Compile Include="Expressions\ArithmeticOperators.cs" />
+    <Compile Include="Expressions\AttributeAccessExpression.cs" />
+    <Compile Include="Expressions\ExpressionVisitor.cs" />
+    <Compile Include="Expressions\FunctionCallExpression.cs" />
+    <Compile Include="Expressions\BinaryOperatorExpression.cs" />
+    <Compile Include="Expressions\ComparisonOperators.cs" />
+    <Compile Include="Expressions\ConstantExpression.cs" />
+    <Compile Include="Expressions\FunctionUtils.cs" />
+    <Compile Include="Expressions\LogicOperators.cs" />
+    <Compile Include="Expressions\UnaryOperatorExpression.cs" />
+    <Compile Include="Expressions\ValueExpression.cs" />
+    <Compile Include="Function.cs" />
+    <Compile Include="IQueryErrorListener.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Query.cs" />
+    <Compile Include="QueryCompiler.cs" />
+    <Compile Include="QueryLexer.cs" />
+    <Compile Include="QueryParser.cs" />
+    <Compile Include="QueryParserBaseListener.cs" />
+    <Compile Include="QueryParserBaseVisitor.cs" />
+    <Compile Include="QueryParserListener.cs" />
+    <Compile Include="QueryParserVisitor.cs" />
+    <Compile Include="QueryProgress.cs" />
+    <Compile Include="QueryTextComparer.cs" />
+    <Compile Include="QueryViewRepository.cs" />
+    <Compile Include="Runtime.cs" />
+    <Compile Include="Search\AccessedAttributesVisitor.cs" />
+    <Compile Include="Expressions\ConstantReductionVisitor.cs" />
+    <Compile Include="Search\BreadthFirstSearchComparer.cs" />
+    <Compile Include="Search\IPriorityFunction.cs" />
+    <Compile Include="Search\PriorityFunction.cs" />
+    <Compile Include="Search\SearchPriorityComparer.cs" />
+    <Compile Include="Search\PriorityComparerFactory.cs" />
+    <Compile Include="Suggestions\Providers\AttributeNameSuggestionProvider.cs" />
+    <Compile Include="Suggestions\Providers\AttributeValueSuggestionProvider.cs" />
+    <Compile Include="Suggestions\CaretToken.cs" />
+    <Compile Include="Suggestions\CaretTokenSource.cs" />
+    <Compile Include="Suggestions\Providers\DirectorySuggestionProvider.cs" />
+    <Compile Include="Suggestions\Providers\FunctionSuggestion.cs" />
+    <Compile Include="Suggestions\Providers\FunctionSuggestionProvider.cs" />
+    <Compile Include="Suggestions\Providers\IdentifierSuggestion.cs" />
+    <Compile Include="Suggestions\Providers\MetadataAttributeSuggestionProvider.cs" />
+    <Compile Include="Suggestions\Providers\StaticTokenSuggestionProvider.cs" />
+    <Compile Include="Suggestions\Providers\ValueSuggestion.cs" />
+    <Compile Include="Suggestions\QuerySuggestion.cs" />
+    <Compile Include="Suggestions\QuerySuggestionComparer.cs" />
+    <Compile Include="Suggestions\Providers\SuggestionProvider.cs" />
+    <Compile Include="Suggestions\QuerySuggestions.cs" />
+    <Compile Include="Suggestions\SuggestionState.cs" />
+    <Compile Include="Suggestions\Providers\ViewSuggestionProvider.cs" />
+    <Compile Include="Suggestions\StateCollector.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Viewer.Core\Viewer.Core.csproj">
+      <Project>{1dcd51e0-3059-4ddd-9f7f-3af6daf9d648}</Project>
+      <Name>Viewer.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Viewer.Data\Viewer.Data.csproj">
+      <Project>{1d709be7-4906-4af8-b31c-3ee7a1eb3323}</Project>
+      <Name>Viewer.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Viewer.IO\Viewer.IO.csproj">
+      <Project>{e5d95203-8d44-46f1-8af0-43c1b7f6ad33}</Project>
+      <Name>Viewer.IO</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>call $(SolutionDir)tools/antlr4 -package Viewer.Query -o $(ProjectDir) $(ProjectDir)QueryLexer.g4
+call $(SolutionDir)tools/antlr4 -visitor -package Viewer.Query -o $(ProjectDir) $(ProjectDir)QueryParser.g4</PreBuildEvent>
+  </PropertyGroup>
+</Project>
